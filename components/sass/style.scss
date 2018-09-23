@@ -1,0 +1,91 @@
+body{
+    background: seagreen;
+    ul li{
+        background: aquamarine;
+    }
+    p{
+        font-family: 'tahoma';
+    }
+
+}
+
+
+@mixin mymixin{
+    border: 3px solid green;
+    padding: 10px;
+
+}
+
+$mycolor: green;
+$mysize: 30px;
+$mystring: " is funny";
+
+
+#mypara{
+background: $mycolor + red;
+font-size: $mysize;
+width: $mysize+200;  //Opration
+@include mymixin; 
+
+}
+#mypara:after{
+    content: $mystring;
+}
+
+// if else
+$grid: 10;
+
+@if ($grid == 24){
+    #mypara{
+        height: 300px;
+    }
+} @else if($grid == 12){
+    #mypara{
+        height: 100px;
+    }
+} @else{
+    #mypara{
+        height: 50px;
+    }
+}
+
+//media query by mixin and @content
+$L: 1200px;
+$M: 992px;
+$S: 768px;
+
+@mixin mediaQuery($canvas){
+    @if $canvas == S {
+        @media only screen and (max-width:$S){@content}
+    }@else if $canvas == M {
+        @media only screen and (max-width:$M){@content}
+    }@else if $canvas == L {
+        @media only screen and (max-width:$L){@content}
+    }
+}
+
+footer {
+   @include mediaQuery(S) {
+       height: 200px;
+       border-bottom: 10px;
+       background: greenyellow;
+   }
+}
+
+
+//using arguments with defaults
+@mixin myborder($width:10px, $style: solid, $color:yellow){
+    border: $width $style $color;
+    
+}
+
+h1{
+    @include myborder(2px, dotted, red);
+}
+
+$mycolor: green;
+h2{
+    border-color: hsl(hue($mycolor), 20%, 50%);
+    border-style: solid;
+    border-width: $mysize;
+}
